@@ -14,7 +14,7 @@ def save_state(index, language):
         key = winreg.OpenKey(winreg.HKEY_CURRENT_USER, r'SOFTWARE\RustCLR', 0, winreg.KEY_SET_VALUE)
     except FileNotFoundError:
         key = winreg.CreateKey(winreg.HKEY_CURRENT_USER, r'SOFTWARE\RustCLR')
-    winreg.SetValueEx(key, 'last_index', 0, winreg.REG_DWORD, index)
+    winreg.SetValueEx(key, 'last_index', 0, winreg.REG_DWORD, index) #CHUJE MUJE
     winreg.SetValueEx(key, 'language', 0, winreg.REG_DWORD, language)
     winreg.CloseKey(key)
 
