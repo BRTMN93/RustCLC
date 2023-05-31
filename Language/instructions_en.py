@@ -11,6 +11,9 @@ def print_instructions():
     print("Ctrl+F8: Repeat last code")
     print("F4:      Loop of five codes")
     print("Ctrl+F4: Repeat last five codes\n")
+    print("DEL:      Reset to the beginning of the list")
+    print("END:      Program termination\n")
+
 
 def print_reset():
     print("Index has been reset to the beginning of the list.\n")
