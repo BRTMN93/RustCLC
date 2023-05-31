@@ -25,10 +25,12 @@ def load_state():
         lang_val, lang_regtype = winreg.QueryValueEx(key, 'language')
         winreg.CloseKey(key)
 
-        if lang_val in [1, 2, 3]:
+        if lang_val in [1, 2, 3, 4]:  # uwzględnienie wszystkich 4 możliwych wartości dla lang_val
             return val, lang_val
     except FileNotFoundError:
-        return 0, None
+        pass
+
+    return 0, None
 
 def read_pin_codes():
     return pin_codes.strip().split("\n")
@@ -45,10 +47,11 @@ def load_language():
         print("Polski: 1")
         print("English: 2")
         print("Deutsch: 3")
+        print("Français: 4")
 
-        while language not in [1, 2, 3]:
+        while language not in [1, 2, 3, 4]:
             choice = msvcrt.getch()
-            if choice in [b'1', b'2', b'3']:
+            if choice in [b'1', b'2', b'3', b'4']:
                 language = int(choice)
                 break
         save_state(current_index, language)
@@ -59,6 +62,8 @@ def load_language():
         from Language.instructions_en import print_instructions, print_reset, print_end
     elif language == 3:
         from Language.instructions_de import print_instructions, print_reset, print_end
+    elif language == 4:
+        from Language.instructions_fr import print_instructions, print_reset, print_end
 
     return print_instructions, print_reset, print_end
 
@@ -115,12 +120,22 @@ def repeat_action(x_offset):
 
     print(f"{current_index}. {last_number}")
 
+def change_language():
+    global print_instructions, print_reset, print_end, language
+    language = None
+    save_state(current_index, language)
+    print_instructions, print_reset, print_end = load_language()
 
-def on_press(key):
+
+currently_pressed_keys = set()
+
+def handle_key_press(key):
     global current_index
     global last_number
     global language
     global last_loop_index
+    global currently_pressed_keys
+    global print_instructions, print_reset, print_end
 
     try:
         if key == keyboard.Key.end:
@@ -134,48 +149,108 @@ def on_press(key):
             print_instructions()
             print_reset()
 
+        elif key == keyboard.KeyCode.from_char('l') and (keyboard.Key.alt_l in currently_pressed_keys or keyboard.Key.alt_r in currently_pressed_keys):
+            clear_console()
+            language = change_language()
+            print_instructions, print_reset, print_end = load_language()
+            print_instructions()
+
+        ### Powtórzenie poprzedniego indexu ###
+        #__Dla drzwi__#
+        elif key == keyboard.Key.f5 and (keyboard.Key.ctrl_l in currently_pressed_keys or keyboard.Key.ctrl_r in currently_pressed_keys): 
+            repeat_action(50)
+
+        #__Dla bram__#
+        elif key == keyboard.Key.f8 and (keyboard.Key.ctrl_l in currently_pressed_keys or keyboard.Key.ctrl_r in currently_pressed_keys):
+            repeat_action(-50)
+
+        ### Wywaołanie kolejnego indexu ###
+        #__Dla drzwi__#
         elif key == keyboard.Key.f5:
             perform_action(50)
 
-        elif key == keyboard.Key.f9:
+        #__Dla bram__#
+        elif key == keyboard.Key.f8:
             perform_action(-50)
 
-        elif key == keyboard.Key.f6:
-            repeat_action(50)
+        ### Wywołanie 5 poprzednich indeksów ###
+        #_Dla drzwi_#
+        elif key == keyboard.Key.f1 and (keyboard.Key.ctrl_l in currently_pressed_keys or keyboard.Key.ctrl_r in currently_pressed_keys):
+            prev_index = current_index
+            current_index = max(0, current_index - 5)
+            save_state(current_index, language)
+            actions_taken = min(5, prev_index - current_index)
+            for _ in range(actions_taken):
+                perform_action(50)
+                time.sleep(1.5)
+            last_loop_index = current_index - 1
 
-        elif key == keyboard.Key.f10:
-            repeat_action(-50)
+            for _ in range(5 - actions_taken):
+                if current_index < len(numbers):
+                    perform_action(50)
+                    time.sleep(1.5)
+        
+        #_Dla bram_#
+        elif key == keyboard.Key.f4 and (keyboard.Key.ctrl_l in currently_pressed_keys or keyboard.Key.ctrl_r in currently_pressed_keys):
+            prev_index = current_index
+            current_index = max(0, current_index - 5)
+            save_state(current_index, language)
+            actions_taken = min(5, prev_index - current_index)
+            for _ in range(actions_taken):
+                perform_action(-50)
+                time.sleep(1.5)
+            last_loop_index = current_index - 1
 
-        elif key == keyboard.Key.f2:
+            for _ in range(5 - actions_taken):
+                if current_index < len(numbers):
+                    perform_action(50)
+                    time.sleep(1.5)
+
+        ### Wywoałnie w pętli kolejnych 5 indexów ###
+        #__Dla drzwi__#
+        elif key == keyboard.Key.f1:
             for _ in range(5):
                 perform_action(50)
                 time.sleep(1.5)
                 last_loop_index = current_index - 1
 
-        elif key == keyboard.Key.f3:
+        elif key == keyboard.Key.f4:
             for _ in range(5):
                 perform_action(-50)
-                time.sleep(2)
-                last_loop_index = current_index - 1
-
-        elif key == keyboard.Key.f7:
-            if last_loop_index > 0:
-                for i in range(last_loop_index, current_index):
-                    perform_action(50)
-                    time.sleep(1.5)  # Przerwa 2 sekundy
-                last_loop_index = current_index - 1
-
-        elif key == keyboard.Key.f11:
-            if last_loop_index > 0:
-                for i in range(last_loop_index, current_index):
-                    perform_action(-50)
-                    time.sleep(1.5)  # Przerwa 2 sekundy
+                time.sleep(1.5)
                 last_loop_index = current_index - 1
 
     except AttributeError:
         pass
 
+def change_language():
+    language = None
+    print("Wybierz język / Choose language / Wählen Sie die Sprache:")
+    print("Polski: 1")
+    print("English: 2")
+    print("Deutsch: 3")
+    print("Français: 4")
+
+    while language not in [1, 2, 3, 4]:
+        choice = msvcrt.getch()
+        if choice in [b'1', b'2', b'3', b'4']:
+            language = int(choice)
+            break
+    save_state(current_index, language)
+    clear_console()
+    return language
+
+def on_press(key):
+    currently_pressed_keys.add(key)
+    handle_key_press(key)
+
+def on_release(key):
+    try:
+        currently_pressed_keys.remove(key)
+    except KeyError:
+        pass
+
 print_instructions()
 
-with keyboard.Listener(on_press=on_press) as listener:
+with keyboard.Listener(on_press=on_press, on_release=on_release) as listener:
     listener.join()

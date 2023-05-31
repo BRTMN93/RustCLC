@@ -1,14 +1,19 @@
 def print_instructions():
-    print("Zielen Sie mit dem Fadenkreuz auf das Schloss und wählen Sie eine Option:\n")
-    print("F5:  Knacken Sie den Code an TÜREN")
-    print("F6:  Wiederholen Sie den letzten Code für TÜREN\n")
-    print("F9:  Knacken Sie den Code an TOREN")
-    print("F10: Wiederholen Sie den letzten Code für TORE\n")
-    print("Delete: Setzt den Fortschrittsspeicher zurück")
-    print("END:    Schließt das Programm\n")
+    print("Language: Alt+L\n")
+    print("Richten Sie das Fadenkreuz auf das Schloss und wählen Sie eine Option:\n")
+    print("CODEKNACKEN AN *TÜREN*")
+    print("F5:      Einzelner Code")
+    print("Ctrl+F5: Letzten Code wiederholen")
+    print("F1:      Schleife von fünf Codes")
+    print("Ctrl+F1: Letzte fünf Codes wiederholen\n")
+    print("CODEKNACKEN AN *TOREN*")
+    print("F8:      Einzelner Code")
+    print("Ctrl+F8: Letzten Code wiederholen")
+    print("F4:      Schleife von fünf Codes")
+    print("Ctrl+F4: Letzte fünf Codes wiederholen\n")
 
 def print_reset():
-    print("Der Index wurde an den Anfang der Liste zurückgesetzt.\n")
+    print("Index wurde auf den Anfang der Liste zurückgesetzt.\n")
 
 def print_end():
-    print("Schließen des Programms...")
+    print("Programm wird geschlossen...")
