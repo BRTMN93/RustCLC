@@ -33,9 +33,35 @@ def load_state():
     return 0, None
 
 def read_pin_codes():
-    return pin_codes.strip().split("\n")
+    return list(enumerate(pin_codes.strip().split("\n"), start=1))
 
-numbers = read_pin_codes()
+# Query number of users and order of the user
+def query_users():
+    print("Ilu będzie użytkowników (1-8)?")
+    users = 0
+    while users not in range(1, 9):
+        choice = msvcrt.getch()
+        if choice in [bytes(str(i), 'utf-8') for i in range(1, 9)]:
+            users = int(choice)
+            break
+    return users
+
+def query_user_order(users):
+    print(f"Jesteś którym użytkownikiem z {users}?")
+    user_order = 0
+    while user_order not in range(1, users+1):
+        choice = msvcrt.getch()
+        if choice in [bytes(str(i), 'utf-8') for i in range(1, users+1)]:
+            user_order = int(choice)
+            clear_console()
+            break
+    return user_order
+
+users = query_users()
+user_order = query_user_order(users)
+
+numbers = read_pin_codes()[user_order-1::users]
+
 current_index = 0
 last_number = None
 last_loop_index = 0  # Numer ostatniej pętli
@@ -93,11 +119,11 @@ def perform_action(x_offset):
     time.sleep(0.03)
 
     last_number = numbers[current_index]
-    for digit in last_number:
+    for digit in last_number[1]:
         pyautogui.write(digit)
         time.sleep(0.009)
         
-    print(f"{current_index + 1}. {last_number}")
+    print(f"{last_number[0]}. {last_number[1]}")
     save_state(current_index, language)
     current_index += 1
 
@@ -114,11 +140,11 @@ def repeat_action(x_offset):
     pyautogui.keyUp('e')
     time.sleep(0.03)
     if last_number is not None:
-        for digit in last_number:
+        for digit in last_number[1]:
             pyautogui.write(digit)
             time.sleep(0.009)
 
-    print(f"{current_index}. {last_number}")
+    print(f"{last_number[0]}. {last_number[1]}")
 
 def change_language():
     global print_instructions, print_reset, print_end, language
