@@ -37,7 +37,7 @@ def read_pin_codes():
 
 # Query number of users and order of the user
 def query_users():
-    print("Ilu będzie użytkowników (1-8)?")
+    print("How many users (1-8)?")
     users = 0
     while users not in range(1, 9):
         choice = msvcrt.getch()
@@ -47,7 +47,7 @@ def query_users():
     return users
 
 def query_user_order(users):
-    print(f"Jesteś którym użytkownikiem z {users}?")
+    print(f"Which one of these {users} are you?")
     user_order = 0
     while user_order not in range(1, users+1):
         choice = msvcrt.getch()
