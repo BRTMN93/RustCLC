@@ -6,7 +6,7 @@ Python 3
 Python libraries: pyautogui and pynput
 A module named pin_codes that contains the list of pin codes
 You can install the required Python libraries using pip:
-*pip install pyautogui pynput*
+***pip install pyautogui pynput***
 
 ## How to Use
 Start the program by running the script.
