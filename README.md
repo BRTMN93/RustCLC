@@ -22,28 +22,18 @@ You can select the language of your choice for the prompts. The options are: Pol
 To perform actions or repeat actions, you can use different key combinations as described below:
 
 **F5:** Perform action for doors.
-
 **F8:** Perform action for gates.
-
 **Ctrl + F5:** Repeat the last action for doors.
-
 **Ctrl + F8:** Repeat the last action for gates.
-
 **F1:** Perform the next 5 actions for doors.
-
 **F4:** Perform the next 5 actions for gates.
-
 **Ctrl + F1:** Perform the previous 5 actions for doors.
-
 **Ctrl + F4:** Perform the previous 5 actions for gates.
-
 **Alt + L:** Change the language of prompts.
-
 **Delete:** Reset the program.
-
 **End:** Quit the program.
 
-Remember, your progress is saved in the Windows Registry (HKEY_CURRENT_USER\SOFTWARE\RustCLC), so you can resume the program at a later time.
+**Remember, your progress is saved in the Windows Registry (HKEY_CURRENT_USER\SOFTWARE\RustCLC), so you can resume the program at a later time.**
 
 ## Disclaimer
 This tool is designed to only be used where automated entry of pin codes is allowed by the game's rules and guidelines. Users are solely responsible for any potential rule violations.
