@@ -14,7 +14,6 @@ def print_instructions():
     print("DEL:      Zurücksetzen auf den Anfang der Liste")
     print("END:      Programm beenden\n")
 
-
 def print_reset():
     print("Index wurde auf den Anfang der Liste zurückgesetzt.\n")
 
