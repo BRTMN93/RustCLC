@@ -25,7 +25,7 @@ def load_state():
         lang_val, lang_regtype = winreg.QueryValueEx(key, 'language')
         winreg.CloseKey(key)
 
-        if lang_val in [1, 2, 3, 4]:  # uwzględnienie wszystkich 4 możliwych wartości dla lang_val
+        if lang_val in [1, 2, 3, 4]:
             return val, lang_val
     except FileNotFoundError:
         pass
