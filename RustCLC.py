@@ -37,7 +37,15 @@ def read_pin_codes():
 
 # Query number of users and order of the user
 def query_users():
-    print("How many users (1-8)?")
+    current_index, language = load_state()
+    if language == 1:
+        print("Ilu użytkowników (1-8)?")
+    elif language == 2:
+        print("How many users (1-8)?")
+    elif language == 3:
+        print("Wie viele Benutzer (1-8)?")
+    elif language == 4:
+        print("Combien d'utilisateurs (1-8)?")
     users = 0
     while users not in range(1, 9):
         choice = msvcrt.getch()
@@ -47,7 +55,15 @@ def query_users():
     return users
 
 def query_user_order(users):
-    print(f"Which one of these {users} are you?")
+    current_index, language = load_state()
+    if language == 1:
+        print(f"Którym w kolejności z tych {users} jesteś?")
+    elif language == 2:
+        print(f"Which one of these {users} are you?")
+    elif language == 3:
+        print(f"Welcher dieser {users} bist du?")
+    elif language == 4:
+        print(f"Lequel de ces {users} êtes-vous?")
     user_order = 0
     while user_order not in range(1, users+1):
         choice = msvcrt.getch()
@@ -58,13 +74,16 @@ def query_user_order(users):
     return user_order
 
 users = query_users()
-user_order = query_user_order(users)
+if users > 1:
+    user_order = query_user_order(users)
+else:
+    user_order = 1
 
 numbers = read_pin_codes()[user_order-1::users]
 
 current_index = 0
 last_number = None
-last_loop_index = 0  # Numer ostatniej pętli
+last_loop_index = 0
 
 def load_language():
     language = load_state()[1]
@@ -95,6 +114,8 @@ def load_language():
 
 print_instructions, print_reset, print_end = load_language()
 
+clear_console()  # Wyczyść konsolę przed wydrukowaniem instrukcji
+print_instructions()
 current_index, language = load_state()
 current_index += 1
 last_number = numbers[current_index - 1] if current_index - 1 < len(numbers) else None
@@ -275,8 +296,6 @@ def on_release(key):
         currently_pressed_keys.remove(key)
     except KeyError:
         pass
-
-print_instructions()
 
 with keyboard.Listener(on_press=on_press, on_release=on_release) as listener:
     listener.join()
