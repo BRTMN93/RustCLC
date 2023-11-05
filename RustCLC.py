@@ -185,17 +185,20 @@ def handle_key_press(key):
     global print_instructions, print_reset, print_end
 
     try:
+        ### Zakończenie programu ###
         if key == keyboard.Key.end:
             print_end()
             return False
 
-        elif key == keyboard.Key.delete:
+        ### Reset listy kodów ###
+        elif key == keyboard.Key.delete and (keyboard.Key.alt_l in currently_pressed_keys or keyboard.Key.alt_r in currently_pressed_keys):
             current_index = 0
             save_state(current_index, language)
             clear_console()
             print_instructions()
             print_reset()
 
+        ### Zmiana języka ###
         elif key == keyboard.KeyCode.from_char('l') and (keyboard.Key.alt_l in currently_pressed_keys or keyboard.Key.alt_r in currently_pressed_keys):
             clear_console()
             language = change_language()
@@ -204,7 +207,7 @@ def handle_key_press(key):
 
         ### Powtórzenie poprzedniego indexu ###
         #__Dla drzwi__#
-        elif key == keyboard.Key.f5 and (keyboard.Key.ctrl_l in currently_pressed_keys or keyboard.Key.ctrl_r in currently_pressed_keys): 
+        elif key == keyboard.Key.f4 and (keyboard.Key.ctrl_l in currently_pressed_keys or keyboard.Key.ctrl_r in currently_pressed_keys): 
             repeat_action(50)
 
         #__Dla bram__#
@@ -213,7 +216,7 @@ def handle_key_press(key):
 
         ### Wywaołanie kolejnego indexu ###
         #__Dla drzwi__#
-        elif key == keyboard.Key.f5:
+        elif key == keyboard.Key.f4:
             perform_action(50)
 
         #__Dla bram__#
@@ -222,7 +225,7 @@ def handle_key_press(key):
 
         ### Wywołanie 5 poprzednich indeksów ###
         #_Dla drzwi_#
-        elif key == keyboard.Key.f1 and (keyboard.Key.ctrl_l in currently_pressed_keys or keyboard.Key.ctrl_r in currently_pressed_keys):
+        elif key == keyboard.Key.f5 and (keyboard.Key.ctrl_l in currently_pressed_keys or keyboard.Key.ctrl_r in currently_pressed_keys):
             prev_index = current_index
             current_index = max(0, current_index - 5)
             save_state(current_index, language)
@@ -238,7 +241,7 @@ def handle_key_press(key):
                     time.sleep(1.5)
         
         #_Dla bram_#
-        elif key == keyboard.Key.f4 and (keyboard.Key.ctrl_l in currently_pressed_keys or keyboard.Key.ctrl_r in currently_pressed_keys):
+        elif key == keyboard.Key.f9 and (keyboard.Key.ctrl_l in currently_pressed_keys or keyboard.Key.ctrl_r in currently_pressed_keys):
             prev_index = current_index
             current_index = max(0, current_index - 5)
             save_state(current_index, language)
@@ -255,13 +258,13 @@ def handle_key_press(key):
 
         ### Wywoałnie w pętli kolejnych 5 indexów ###
         #__Dla drzwi__#
-        elif key == keyboard.Key.f1:
+        elif key == keyboard.Key.f5:
             for _ in range(5):
                 perform_action(50)
                 time.sleep(1.5)
                 last_loop_index = current_index - 1
 
-        elif key == keyboard.Key.f4:
+        elif key == keyboard.Key.f9:
             for _ in range(5):
                 perform_action(-50)
                 time.sleep(1.5)
