@@ -21,25 +21,25 @@ You can select the language of your choice for the prompts. The options are: Pol
 
 To perform actions or repeat actions, you can use different key combinations as described below:
 
-**F5:** Perform action for doors.
+**F4:** Perform action for doors.
 
 **F8:** Perform action for gates.
 
-**Ctrl + F5:** Repeat the last action for doors.
+**Ctrl + F4:** Repeat the last action for doors.
 
 **Ctrl + F8:** Repeat the last action for gates.
 
-**F1:** Perform the next 5 actions for doors.
+**F5:** Perform the next 5 actions for doors.
 
-**F4:** Perform the next 5 actions for gates.
+**F9:** Perform the next 5 actions for gates.
 
-**Ctrl + F1:** Perform the previous 5 actions for doors.
+**Ctrl + F5:** Perform the previous 5 actions for doors.
 
-**Ctrl + F4:** Perform the previous 5 actions for gates.
+**Ctrl + F9:** Perform the previous 5 actions for gates.
 
 **Alt + L:** Change the language of prompts.
 
-**Delete:** Reset the program.
+**Alt+Delete:** Reset the program.
 
 **End:** Quit the program.
 
