@@ -47,3 +47,5 @@ To perform actions or repeat actions, you can use different key combinations as 
 
 ## Disclaimer
 This tool is designed to only be used where automated entry of pin codes is allowed by the game's rules and guidelines. Users are solely responsible for any potential rule violations.
+
+## Download: https://drive.google.com/file/d/1ZerAguAU-9FWHrq4DSh85o7Ahk6lITRA/view?usp=drivesdk
